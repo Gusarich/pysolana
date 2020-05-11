@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='pysol',
-    version='0.1.3',
+    version='0.1.4',
     author='Sedov Daniel',
     author_email='danielsedovzzz@gmail.com',
     description='Python Solana Package',

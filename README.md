@@ -32,7 +32,7 @@ print(getTransactionCount()) # 555309062
 
 To generate new keypair you need to create `Sol` object in code.
 ```python
-kepypair = Sol(chain='devnet')
+keypair = Sol(chain='devnet')
 print(keypair.seedphrase) # 12-words seedphrase that used to import keypair
 print(keypair.pubkey) # Solana account address
 ```
