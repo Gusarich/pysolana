@@ -33,7 +33,7 @@ class Sol:
 
         self.chain = chain
 
-    def setChain(self, chain):
+    def set_chain(self, chain):
         self.chain = chain
 
     def balance(self):

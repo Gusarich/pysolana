@@ -32,7 +32,7 @@ print(getTransactionCount()) # 555309062
 
 To generate new keypair you need to create `Sol` object in code.
 ```python
-kepyair = Sol(chain='devnet')
+kepypair = Sol(chain='devnet')
 print(keypair.seedphrase) # 12-words seedphrase that used to import keypair
 print(keypair.pubkey) # Solana account address
 ```
@@ -47,18 +47,18 @@ print(kp1.pubkey == kp2.pubkey) # True
 One keypair can be used in different chains.
 
 There are some methods in `Sol` class:
- * [setChain](#setchain)
+ * [set_chain](#setchain)
  * [balance](#balance)
  * [airdrop](#airdrop)
  * [transfer](#transfer)
 
-#### setChain
-`setChain(chain)` method used to change keypair chain.
+#### set_chain
+`set_chain(chain)` method used to change keypair chain.
 ```python
 kp = Sol(chain='mainnet') # Created keypair
 
 kp.balance() # Check balance in mainnet
-kp.setchain('testnet') # Set chain to testnet
+kp.set_chain('testnet') # Set chain to testnet
 kp.balance() # Check balance in testnet
 ```
 
@@ -113,11 +113,6 @@ print(kp1.balance()) # 99.999995
 print(kp2.balance()) # 99.999995
 # Transaction is not confirmed in chain and balance() showing only confirmed balance.
 ```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
