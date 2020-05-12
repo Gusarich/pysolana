@@ -1,6 +1,6 @@
-# pysolana
+# PySolana
 
-pysolana is a Python library for dealing with Solana blockchain.
+PySolana is a Python library for dealing with Solana blockchain.
 
 ## Installation
 
