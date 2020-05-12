@@ -7,7 +7,7 @@ PySolana is a Python library for dealing with Solana blockchain.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pysolana.
 
 ```bash
-pip install pysolana
+pip3 install pysolana
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ There are 2 modules in `pysolana`:
 
 ### api
 
-You can see all RPC API Solana methods [here](https://docs.solana.com/apps/jsonrpc-api#json-rpc-api-reference)
+You can see all RPC API Solana methods [here](https://docs.solana.com/apps/jsonrpc-api#json-rpc-api-reference). Every method from RPC API writen to function in `api` module.
 
 Example:
 ```python
