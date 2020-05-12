@@ -46,6 +46,9 @@ class Sol:
         raise Exception('balance error')
 
     def airdrop(self, amount, wait=True):
+        if self.chain != 'devnet':
+            raise Exception('airdrop is not allowed in this chain')
+        
         if wait:
             call(f'solana airdrop {amount} {self.pubkey} ' +\
                   f'--url {CHAINS[self.chain]}',
