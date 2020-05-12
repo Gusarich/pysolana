@@ -1,18 +1,18 @@
-# PySol
+# pysolana
 
-PySol is a Python library for dealing with Solana blockchain.
+pysolana is a Python library for dealing with Solana blockchain.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install PySol.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pysolana.
 
 ```bash
-pip install pysol
+pip install pysolana
 ```
 
 ## Usage
 
-There are 2 modules in `pysol`:
+There are 2 modules in `pysolana`:
 
  * `api.py` includes all RPC API Solana methods.
  * `sol.py` includes class `Sol` that used to simply manage Solana accounts with `Python3`

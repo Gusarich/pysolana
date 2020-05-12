@@ -1,2 +1,2 @@
-from pysol.api import *
-from pysol.sol import *
+from pysolana.api import *
+from pysolana.sol import *
