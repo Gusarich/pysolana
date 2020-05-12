@@ -48,7 +48,7 @@ class Sol:
     def airdrop(self, amount, wait=True):
         if self.chain != 'devnet':
             raise Exception('airdrop is not allowed in this chain')
-        
+
         if wait:
             call(f'solana airdrop {amount} {self.pubkey} ' +\
                   f'--url {CHAINS[self.chain]}',
@@ -79,3 +79,72 @@ class Sol:
         except CalledProcessError as grepexc:
             pass
         raise Exception('transfer error')
+
+    def create_stake_account(self, amount):
+        stake_account = Sol()
+        text = f'printf "{self.seedphrase}\n\n{self.seedphrase}\n\n' +\
+               f'{self.seedphrase}\n\n{self.seedphrase}\n\n' +\
+               f'{stake_account.seedphrase}" | ' +\
+               'solana create-stake-account --from ASK ASK 100' +\
+               ' --stake-authority ASK --withdraw-authority ASK --fee-payer ASK'
+        call(text, shell=True, stdout=PIPE, stderr=PIPE)
+        try:
+            return stake_account.pubkey
+        except CalledProcessError as grepexc:
+            pass
+        raise Exception('stake account error')
+
+    def delegate_stake(self, stake_account, vote_account):
+        text = f'printf "{self.seedphrase}\n\n{self.seedphrase}\n\n" | ' +\
+               f'solana delegate-stake {stake_account} {vote_account} ' +\
+               '--stake-authority ASK --fee-payer ASK'
+
+        try:
+            call(text, shell=True, stdout=PIPE, stderr=PIPE)
+            error = False
+        except CalledProcessError as grepexc:
+            error = True
+        if error:
+            raise Exception('delegate stake error')
+
+    def deactivate_stake(self, stake_account):
+        text = f'printf "{self.seedphrase}\n\n{self.seedphrase}\n\n" | ' +\
+               f'solana deactivate-stake {stake_account} ' +\
+               '--stake-authority ASK --fee-payer ASK'
+
+        try:
+            call(text, shell=True, stdout=PIPE, stderr=PIPE)
+            error = False
+        except CalledProcessError as grepexc:
+            error = True
+        if error:
+            raise Exception('deactivate stake error')
+
+    def withdraw_stake(self, stake_account, amount):
+        text = f'printf "{self.seedphrase}\n\n{self.seedphrase}\n\n" | ' +\
+               f'solana withdraw-stake {stake_account} {self.pubkey}' +\
+               f' {amount} --withdraw-authority ASK --fee-payer ASK'
+
+        try:
+            call(text, shell=True)
+            error = False
+        except CalledProcessError as grepexc:
+            error = True
+        if error:
+            raise Exception('withdraw stake error')
+
+
+
+kp = Sol(chain='devnet') # Create new keypair
+kp.airdrop(1000)
+
+stake_account = kp.create_stake_account(100) # Creating new stake account with 100 SOL staked
+
+kp.delegate_stake(stake_account, '5MMCR4NbTZqjthjLGywmeT66iwE9J9f7kjtxzJjwfUx2') # Delegating ALL stake to validator
+
+print(kp.balance()) #
+kp.deactivate_stake(stake_account) # Deactivating ALL stake from stake_account
+# It takes some time to proceed this type of transactions, so you need to wait until you get your SOL back to main account.
+
+# Some time later:
+print(kp.balance())

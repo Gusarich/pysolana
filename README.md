@@ -53,10 +53,14 @@ print(kp1.pubkey == kp2.pubkey) # True
 One keypair can be used in different chains.
 
 There are some methods in `Sol` class:
- * [set_chain](#setchain)
+ * [set_chain](#set_chain)
  * [balance](#balance)
  * [airdrop](#airdrop)
  * [transfer](#transfer)
+ * [create_stake_account](#create_stake_account)
+ * [delegate_stake](#delegate_stake)
+ * [deactivate_stake](#deactivate_stake)
+ * [withdraw_stake](#withdraw_stake)
 
 #### set_chain
 `set_chain(chain)` method used to change keypair chain.
@@ -126,6 +130,71 @@ kp1.transfer(kp2, 50, wait=False)
 print(kp1.balance()) # 99.999995
 print(kp2.balance()) # 99.999995
 # Transaction is not confirmed in chain and balance() showing only confirmed balance.
+```
+
+#### create_stake_account
+`create_stake_account(amount)` method used to create new stake account.
+```python
+from pysolana.sol import *
+
+kp = Sol(chain='devnet') # Create new keypair
+kp.airdrop(200)
+
+stake_account = kp.create_stake_account(100) # Creating new stake account
+print(stake_account) # Dhyi75k1aA4Rfn99gh4XCT64yxvGzCpu81ZE4iDe3RZz
+print(kp.balance()) # 99.99999
+```
+
+#### delegate_stake
+`delegate_stake(stake_account, vote_account)` method used to delegate stake at account `stake_account` for validator `vote_account`.
+```python
+from pysolana.sol import *
+
+kp = Sol(chain='devnet') # Create new keypair
+kp.airdrop(1000)
+
+stake_account = kp.create_stake_account(100) # Creating new stake account
+
+kp.delegate_stake(stake_account, '5MMCR4NbTZqjthjLGywmeT66iwE9J9f7kjtxzJjwfUx2') # Delegating ALL stake to validator
+```
+
+#### deactivate_stake
+`deactivate_stake(stake_account)` method used to deactivate stake from `stake_account`
+```python
+from pysolana.sol import *
+
+kp = Sol(chain='devnet') # Create new keypair
+kp.airdrop(1000)
+
+stake_account = kp.create_stake_account(100) # Creating new stake account with 100 SOL staked
+
+kp.delegate_stake(stake_account, '5MMCR4NbTZqjthjLGywmeT66iwE9J9f7kjtxzJjwfUx2') # Delegating ALL stake to validator
+
+print(kp.balance()) # 899.999985
+kp.deactivate_stake(stake_account) # Deactivating ALL stake from stake_account
+# Stake transactions take some time to proceed in blockchain, so you need to wait until your SOL tokens back to account
+
+# Some time later:
+print(kp.balance()) # 999.99998
+```
+
+#### withdraw_stake
+`withdraw_stake(stake_account, amount)` method used to withdraw stake dividends from `stake_account`
+```python
+from pysolana.sol import *
+
+kp = Sol(chain='devnet') # Create new keypair
+kp.airdrop(1000)
+
+stake_account = kp.create_stake_account(100) # Creating new stake account with 100 SOL staked
+
+kp.delegate_stake(stake_account, '5MMCR4NbTZqjthjLGywmeT66iwE9J9f7kjtxzJjwfUx2') # Delegating ALL stake to validator
+
+print(kp.balance()) # 899.999985
+
+# Some time later:
+kp.withdraw_stake(stake_account, 3)
+print(kp.balance()) # 902.99998
 ```
 
 ## License
