@@ -14,24 +14,28 @@ pip install pysolana
 
 There are 2 modules in `pysolana`:
 
- * `api.py` includes all RPC API Solana methods.
- * `sol.py` includes class `Sol` that used to simply manage Solana accounts with `Python3`
+ * `api` includes all RPC API Solana methods.
+ * `sol` includes class `Sol` that used to simply manage Solana accounts with `Python3`
 
-### api.py
+### api
 
 You can see all RPC API Solana methods [here](https://docs.solana.com/apps/jsonrpc-api#json-rpc-api-reference)
 
 Example:
 ```python
+from pysolana.api import *
+
 print(getTransactionCount()) # 555309062
 ```
 
-### sol.py
+### sol
 
 #### Keypairs
 
 To generate new keypair you need to create `Sol` object in code.
 ```python
+from pysolana.sol import *
+
 keypair = Sol(chain='devnet')
 print(keypair.seedphrase) # 12-words seedphrase that used to import keypair
 print(keypair.pubkey) # Solana account address
@@ -39,6 +43,8 @@ print(keypair.pubkey) # Solana account address
 
 To import keypair put seedphrase in `__init__` method.
 ```python
+from pysolana.sol import *
+
 kp1 = Sol(chain='devnet')
 kp2 = Sol(seedphrase=kp1.seedphrase, chain='testnet')
 print(kp1.pubkey == kp2.pubkey) # True
@@ -55,6 +61,8 @@ There are some methods in `Sol` class:
 #### set_chain
 `set_chain(chain)` method used to change keypair chain.
 ```python
+from pysolana.sol import *
+
 kp = Sol(chain='mainnet') # Created keypair
 
 kp.balance() # Check balance in mainnet
@@ -65,6 +73,8 @@ kp.balance() # Check balance in testnet
 #### balance
 `balance()` method used to get balance of account.
 ```python
+from pysolana.sol import *
+
 kp = Sol(seedphrase=my_seedphrase, chain='mainnet') # Created keypair
 
 print(kp.balance()) # 15.0
@@ -73,6 +83,8 @@ print(kp.balance()) # 15.0
 #### airdrop
 `aidrop(amount, wait=True)` method used to request airdrop of SOL tokens in devnet.
 ```python
+from pysolana.sol import *
+
 kp = Sol(chain='devnet') # Created keypair
 
 print(kp.balance()) # 0.0
@@ -88,6 +100,8 @@ print(kp.balance()) # 100.0
 #### transfer
 `transfer(to, amount, wait=True)` method used to send SOL tokens to another account.
 ```python
+from pysolana.sol import *
+
 kp1 = Sol(chain='devnet') # Created first keypair
 kp2 = Sol(chain='devnet') # Created second keypair
 
