@@ -45,20 +45,6 @@ class Sol:
             pass
         raise Exception('balance error')
 
-    def airdrop(self, amount, wait=True):
-        if self.chain != 'devnet':
-            raise Exception('airdrop is not allowed in this chain')
-
-        if wait:
-            call(f'solana airdrop {amount} {self.pubkey} ' +\
-                  f'--url {CHAINS[self.chain]}',
-                  shell=True, stdout=PIPE, stderr=PIPE)
-
-        else:
-            Popen(f'solana airdrop {amount} {self.pubkey} ' +\
-                  f'--url {CHAINS[self.chain]}',
-                  shell=True, stdout=PIPE, stderr=PIPE)
-
     def transfer(self, to, amount, wait=True):
         if to.__class__.__name__ == 'Sol':
             to = to.pubkey
@@ -132,3 +118,14 @@ class Sol:
             error = True
         if error:
             raise Exception('withdraw stake error')
+
+def airdrop(pubkey, amount, wait=True):
+    if wait:
+        call(f'solana airdrop {amount} {pubkey} ' +\
+                f'--url {CHAINS["devnet"]}',
+                shell=True, stdout=PIPE, stderr=PIPE)
+
+    else:
+        Popen(f'solana airdrop {amount} {pubkey} ' +\
+                f'--url {CHAINS["devnet"]}',
+                shell=True, stdout=PIPE, stderr=PIPE)
