@@ -1,3 +1,5 @@
+WARNING: nobody works on this library for 3 years already.
+
 # PySolana
 
 PySolana is a Python library for dealing with Solana blockchain.
